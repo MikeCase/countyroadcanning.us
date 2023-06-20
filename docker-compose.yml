@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+    api:
+        build: .
+        image: crc.us:latest
+        ports:
+            - 5059:5059
+        volumes:
+            - type: bind
+              source: .
+              target: /app/
