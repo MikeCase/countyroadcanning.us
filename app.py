@@ -43,7 +43,6 @@ class User(db.Model):
     def is_anonymous(self):
         return False
     
-    @property
     def get_id(self):
         return self.id
     
@@ -69,7 +68,6 @@ class Product(db.Model):
     def get_price(self):
         return self.price
     
-    @property
     def get_id(self):
         return self.id
 
@@ -137,7 +135,7 @@ class MyAdminIndexView(AdminIndexView):
         login_form = LoginForm(request.form)
         if helpers.validate_form_on_submit(login_form):
             user = login_form.get_user()
-            print(user.id)
+            print(user)
             login.login_user(user)
 
         if login.current_user.is_authenticated:
@@ -146,27 +144,6 @@ class MyAdminIndexView(AdminIndexView):
         self._template_args['form'] = login_form
         self._template_args['link'] = link
         return super(MyAdminIndexView, self).index()
-
-    # @expose('/register/', methods=('GET', 'POST'))
-    # def register_view(self):
-    #     register_form = RegistrationForm(request.form)
-    #     if helpers.validate_form_on_submit(register_form):
-    #         user = User()
-
-    #         register_form.populate_obj(user)
-    #         # we hash the users password to avoid saving it as plaintext in the db,
-    #         # remove to use plain text:
-    #         user.password = generate_password_hash(register_form.password.data)
-
-    #         db.session.add(user)
-    #         db.session.commit()
-
-    #         login.login_user(user)
-    #         return redirect(url_for('.index'))
-    #     link = '<p>Already have an account? <a href="' + url_for('.login_view') + '">Click here to log in.</a></p>'
-    #     self._template_args['form'] = register_form
-    #     self._template_args['link'] = link
-    #     return super(MyAdminIndexView, self).index()
 
     @expose('/logout/')
     def logout_view(self):
