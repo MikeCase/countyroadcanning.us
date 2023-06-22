@@ -28,6 +28,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     email = db.Column(db.String(80), unique=True)
+    # is_active = db.Column(db.Boolean(), default=True)
     pw_hash = db.Column(db.String(255))
 
     @property
@@ -101,7 +102,7 @@ class LoginForm(form.Form):
             raise validators.ValidationError('Invalid password')
 
     def get_user(self):
-        print(db.session.query(User).filter_by(username=self.login.data).first())
+        # print(db.session.query(User).filter_by(username=self.login.data).first())
         return db.session.query(User).filter_by(username=self.login.data).first()
 
 
@@ -141,31 +142,31 @@ class MyAdminIndexView(AdminIndexView):
 
         if login.current_user.is_authenticated:
             return redirect(url_for('.index'))
-        link = '<p>Don\'t have an account? <a href="' + url_for('.register_view') + '">Click here to register.</a></p>'
+        link = '<p>Don\'t have an account? Sorry, you can\'t be here then</p>'
         self._template_args['form'] = login_form
         self._template_args['link'] = link
         return super(MyAdminIndexView, self).index()
 
-    @expose('/register/', methods=('GET', 'POST'))
-    def register_view(self):
-        register_form = RegistrationForm(request.form)
-        if helpers.validate_form_on_submit(register_form):
-            user = User()
+    # @expose('/register/', methods=('GET', 'POST'))
+    # def register_view(self):
+    #     register_form = RegistrationForm(request.form)
+    #     if helpers.validate_form_on_submit(register_form):
+    #         user = User()
 
-            register_form.populate_obj(user)
-            # we hash the users password to avoid saving it as plaintext in the db,
-            # remove to use plain text:
-            user.password = generate_password_hash(register_form.password.data)
+    #         register_form.populate_obj(user)
+    #         # we hash the users password to avoid saving it as plaintext in the db,
+    #         # remove to use plain text:
+    #         user.password = generate_password_hash(register_form.password.data)
 
-            db.session.add(user)
-            db.session.commit()
+    #         db.session.add(user)
+    #         db.session.commit()
 
-            login.login_user(user.id)
-            return redirect(url_for('.index'))
-        link = '<p>Already have an account? <a href="' + url_for('.login_view') + '">Click here to log in.</a></p>'
-        self._template_args['form'] = register_form
-        self._template_args['link'] = link
-        return super(MyAdminIndexView, self).index()
+    #         login.login_user(user)
+    #         return redirect(url_for('.index'))
+    #     link = '<p>Already have an account? <a href="' + url_for('.login_view') + '">Click here to log in.</a></p>'
+    #     self._template_args['form'] = register_form
+    #     self._template_args['link'] = link
+    #     return super(MyAdminIndexView, self).index()
 
     @expose('/logout/')
     def logout_view(self):
