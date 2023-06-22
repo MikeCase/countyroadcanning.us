@@ -9,4 +9,4 @@ ADD . /app/
 
 EXPOSE 5000
 
-CMD ["hypercorn", "main:app", "--bind", "0.0.0.0:5000", "--reload"]
+CMD ["hypercorn", "app:app", "--bind", "0.0.0.0:5000", "--reload"]
