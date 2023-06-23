@@ -1,4 +1,6 @@
 from website import app
 
-
-app.run()
+if app.config['ENV'] == 'prod':
+    app.run(host='0.0.0.0')
+else:
+    app.run() 

@@ -14,7 +14,6 @@ if app.config['ENV'] == 'prod':
 else:
     app.config.from_object('conf.DevConf')
 
-
 db.init_app(app)
 
 
