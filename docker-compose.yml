@@ -9,3 +9,8 @@ services:
             - type: bind
               source: .
               target: /app/
+
+networks:
+  default:
+    name: nginx-proxy-manager_default
+    external: true
