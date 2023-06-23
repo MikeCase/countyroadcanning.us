@@ -4,7 +4,7 @@ services:
         build: .
         image: crc.us:latest
         ports:
-            - 5060:5000
+            - 5050:5050
         volumes:
             - type: bind
               source: .
