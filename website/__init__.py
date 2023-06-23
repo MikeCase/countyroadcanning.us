@@ -1,9 +1,10 @@
+import os.path as op
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import flask_login as login
-from .extensions import db
+from .extensions import db, Admin, MyAdminIndexView, MyModelView
 from .models import User, Product
-from . import admin_viewmodels as vm
+from flask_admin.contrib.fileadmin import FileAdmin
+
 
 app = Flask(__name__)
 
@@ -29,8 +30,11 @@ def init_login(app_context):
 
 init_login(app)
 ## init flask-admin
-admin = vm.Admin(app, name='CRC', index_view=vm.MyAdminIndexView(), base_template='my_master.html', template_mode='bootstrap4')
-admin.add_view(vm.MyModelView(User, db.session))
-admin.add_view(vm.MyModelView(Product, db.session))
+filespath = op.join(op.dirname(__file__), 'static/assets/product_images')
+
+admin = Admin(app, name='CRC', index_view=MyAdminIndexView(), base_template='my_master.html', template_mode='bootstrap4')
+admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Product, db.session))
+admin.add_view(FileAdmin(filespath, '/static/assets/product_images/', name='Images'))
 
 import website.views

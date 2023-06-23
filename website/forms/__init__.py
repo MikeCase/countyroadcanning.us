@@ -4,6 +4,7 @@ from website.extensions import db
 from website.models import User
 
 
+
 #Define login form (for flask-login)
 class LoginForm(form.Form):
     login = fields.StringField(validators=[validators.InputRequired()])
