@@ -7,7 +7,7 @@ from . import admin_viewmodels as vm
 
 app = Flask(__name__)
 
-app.config['ENV'] = "dev"
+app.config['ENV'] = "prod"
 
 if app.config['ENV'] == 'prod':
     app.config.from_object('conf.ProdConf')
