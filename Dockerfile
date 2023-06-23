@@ -7,6 +7,6 @@ RUN pip install -r requirements.txt
 
 ADD . /app/
 
-EXPOSE 5000
+EXPOSE 5050
 
-CMD ["hypercorn", "wsgi:website", "--bind", "0.0.0.0:5000", "--reload"]
+CMD ["hypercorn", "wsgi:website", "--bind", "0.0.0.0:5050", "--reload"]
