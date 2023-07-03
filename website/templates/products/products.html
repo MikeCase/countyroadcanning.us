@@ -4,28 +4,29 @@
 <div class="container mx-auto py-5">
     <p class="h1 harfont">Products</p>
     <div class="container text-center">
-    {# 2x forloop, one for each row, one for each column, every 4 columns you need a new row. #}
-    <div class="row mb-4">
-    {% for product in products %}
-        {% if loop.index % 5 == 0 %}
+        <div class="row mb-4">
+        {% for product in products %}
+            {% if loop.index0 % 4 == 0 %}
         </div>
         <div class="row mb-4">
         {% endif %}
             <div class="col">
-                <div class="card shadow" style="width: 18rem;">
+                <div class="card mx-auto shadow" style="width: 18rem;">
                     <img src="{{ url_for('static', filename=product.img_file) }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         {% if product.qty >= 1 %}
-                            <a href="#" class="btn btn-primary">Add to cart</a>
+                            <form action="/cart/add" method="POST">
+                                <button type="submit" class="btn btn-primary" name="product_id" value="{{product.id}}">Add to cart</button>
+                            </form>
                         {% else %}
                             <div class="h6">Out of stock</div>
                         {% endif %}
                     </div>
                 </div>
             </div>
-    {% endfor %}
+        {% endfor %}
         </div>
     </div>
 </div>

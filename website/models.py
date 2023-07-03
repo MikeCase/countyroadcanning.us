@@ -47,3 +47,8 @@ class Product(db.Model):
     def get_id(self):
         return self.id
     
+# class Cart(db.Model):
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     product_id = db.Column(db.Integer)
+    

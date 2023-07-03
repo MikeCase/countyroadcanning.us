@@ -1,14 +1,15 @@
 import os.path as op
 from flask import Flask
 import flask_login as login
+# from .cart import cart_bp
 from .extensions import db, Admin, MyAdminIndexView, MyModelView
 from .models import User, Product
 from flask_admin.contrib.fileadmin import FileAdmin
-
+from website.cart.cart import cart_bp
 
 app = Flask(__name__)
 
-app.config['ENV'] = "prod"
+app.config['ENV'] = "dev"
 
 if app.config['ENV'] == 'prod':
     app.config.from_object('conf.ProdConf')
@@ -37,4 +38,5 @@ admin.add_view(MyModelView(User, db.session))
 admin.add_view(MyModelView(Product, db.session))
 admin.add_view(FileAdmin(filespath, '/static/assets/product_images/', name='Images'))
 
-import website.views
+app.register_blueprint(cart_bp, url_prefix='/cart')
+import website.routes

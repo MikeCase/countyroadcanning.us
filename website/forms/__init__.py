@@ -1,6 +1,5 @@
 from wtforms import form, fields, validators
 from werkzeug.security import generate_password_hash, check_password_hash
-from website.extensions import db
 from website.models import User
 
 
@@ -23,5 +22,5 @@ class LoginForm(form.Form):
             raise validators.ValidationError('Invalid password')
 
     def get_user(self):
-        # print(db.session.query(User).filter_by(username=self.login.data).first())
-        return db.session.query(User).filter_by(username=self.login.data).first()
+        # print(User.query.filter_by(username=self.login.data).first())
+        return User.query.filter_by(username=self.login.data).first()
