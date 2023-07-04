@@ -6,6 +6,13 @@
         <p class="h1 harfont">Cart</p>
         <div class="row justify-content-center">
             <div class="col-md-2">
+            {% set ns = namespace(subtotal=0.0)%}
+            {% for item in items %}
+                {% set ns.subtotal = ns.subtotal+item.price %}
+            {% endfor %}
+                <p>SubTotal: <small>${{ns.subtotal}}</small></p>
+            </div>
+            <div class="col-md-2">
                 <button class="btn btn-primary" name="checkout">Checkout</button>
             </div>
         </div>
@@ -19,7 +26,6 @@
                         <h5 class="card-title">{{ item.name }}</h5>
                         <p class="card-text">{{ item.desc }}</p>
                         <p>Price: <small>${{ item.price }}</small></p>
-                        
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -28,11 +34,7 @@
                             <input type="hidden" name="prod_id" value="{{ item.id }}"/>
                             <label for="qty" class="form-label">Quantity</label>
                             <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{item.qty}}"/>
-                            {% if item.per_case == True %}
-                                <input type="checkbox" class="form-check-input" name="per_case" checked />
-                            {% else %}
-                                <input type="checkbox" class="form-check-input" name="per_case" />
-                            {% endif %}
+                            <input type="checkbox" class="form-check-input" name="per_case" {% if item.per_case == True %}checked{% endif %} />
                             <label for="per_case" class="form-check-label">Case</label><br/>
                             <button class="btn btn-sm" name="submit"><i class="bi bi-save text-success"></i></button>
                             <a href="{{ url_for('cart_bp.rem_item', product_id=item.id) }}"><i class="bi bi-trash3 text-danger"></i></a>

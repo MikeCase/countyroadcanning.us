@@ -7,7 +7,7 @@ from .cart import cart_bp
 def list():
     if 'cart' not in session:
         return render_template('cart/no_items.html')
-    
+
     return render_template('cart/index.html', items=session['cart'])
 
 
@@ -20,10 +20,10 @@ def add_item_to_cart():
     product_id = request.form.get('product_id')
     product = Product.query.filter(Product.id == product_id).first()
     session['cart'].append({'id': product.id, 'name': product.name, 'price': product.price, 'desc': product.description, 'qty': 1, 'per_case': False})
-    
+
     ## we are setting modified attribute to True because without it Flask will not send the updated session cookie to the client.
     ## @ https://overiq.com/flask-101/sessions-in-flask/
-    session.modified = True 
+    session.modified = True
 
     return redirect(url_for('cart_bp.list'))
 
@@ -67,7 +67,7 @@ def update_cart():
     else:
         purchase_case = True
 
-    # Go through each item in the cart(should never honestly be many.) 
+    # Go through each item in the cart(should never honestly be many.)
     for item in session['cart']:
         if item['id'] == product_id:
             item_idx = session['cart'].index(item)

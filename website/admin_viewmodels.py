@@ -7,12 +7,14 @@ from .forms import LoginForm
 
 # Create customized model view class
 class MyModelView(ModelView):
-
+    
     def is_accessible(self):
         return login.current_user.is_authenticated
-    
+
 # Create customized index view class that handles login & registration
 class MyAdminIndexView(AdminIndexView):
+
+    column_display_all_relations = True
 
     @expose('/')
     def index(self):

@@ -5,5 +5,3 @@ cart_bp = Blueprint('cart_bp', __name__, template_folder='templates', static_fol
 
 
 import website.cart.routes
-
-    

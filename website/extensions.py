@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import redirect, url_for, request
 from flask_admin import AdminIndexView, Admin
+from flask_admin.contrib.fileadmin import FileAdmin
 from flask_admin import helpers, expose
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
@@ -10,12 +11,47 @@ import flask_login as login
 db = SQLAlchemy()
 
 from .forms import LoginForm
+
+
 # Create customized model view class
 class MyModelView(ModelView):
 
     def is_accessible(self):
         return login.current_user.is_authenticated
+
+class ProductView(ModelView):
+
+    def __init__(self, *args, **kwargs):
+        super(ProductView, self).__init__(*args, **kwargs)
+
+    can_view_details = True
+    column_list = ['name', 'description', 'is_active', 'price', 'img_file', 'qty', 'bundles']
+
+    def is_accessible(self):
+        return login.current_user.is_authenticated
     
+class BundleView(ModelView):
+
+    def __init__(self, *args, **kwargs):
+        super(BundleView, self).__init__(*args, **kwargs)
+
+    can_view_details = True
+    column_list = ['name']
+    
+    def is_accessible(self):
+        return login.current_user.is_authenticated
+    
+class FileView(FileAdmin):
+
+    def __init__(self, *args, **kwargs):
+        super(FileView, self).__init__(*args, **kwargs)
+
+    can_view_details = True
+    column_list = ['name', 'size', 'date']
+    
+    def is_accessible(self):
+        return login.current_user.is_authenticated
+
 # Create customized index view class that handles login & registration
 class MyAdminIndexView(AdminIndexView):
 
