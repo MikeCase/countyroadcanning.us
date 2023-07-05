@@ -66,7 +66,7 @@ def first_run(app):
         pwhash = generate_password_hash('pwd')
 
         user = User.query.filter(User.id == 0).first()
-        
+
         if user == None:
             user = User(username=username, email=email, pw_hash=pwhash)
             print(f'adding admin user @{username} to db.')
