@@ -1,7 +1,8 @@
 import os
 import os.path as op
 from flask import Flask
-from dotenv import load_dotenv
+import dotenv
+# from dotenv import load_dotenv
 import flask_login as login
 from flask_migrate import Migrate
 from .extensions import db, Admin, MyAdminIndexView, MyModelView, ProductView, BundleView, FileView
@@ -10,7 +11,8 @@ from website.cart import cart_bp
 from website.bundles import bundle_bp
 from werkzeug.security import generate_password_hash
 from .initial_products import products
-load_dotenv()
+dotfile = dotenv.find_dotenv()
+dotenv.load_dotenv(dotfile)
 
 
 def create_app():
@@ -63,9 +65,9 @@ def first_run(app):
         pwd = os.getenv('ADMINPWD')
         pwhash = generate_password_hash('pwd')
 
-        try:
-            user = User.query.filter(User.id == 0).first()
-        except:
+        user = User.query.filter(User.id == 0).first()
+        
+        if user == None:
             user = User(username=username, email=email, pw_hash=pwhash)
             print(f'adding admin user @{username} to db.')
             db.session.add(user)
@@ -82,6 +84,12 @@ def first_run(app):
 
 app = create_app()
 
+## Check to see if this is the first run of the app.
+if dotenv.get_key(dotfile, key_to_get='FIRSTRUN') == "True":
+    first_run(app)
+    dotenv.set_key(dotfile, key_to_set='FIRSTRUN', value_to_set="False")
+else:
+    print("DB already available. Lets run this puppy!")
 
 
 import website.routes

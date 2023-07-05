@@ -31,14 +31,14 @@ products = [
         'name': 'Pumpkin Pie',
         'description': 'Pumpkin Pie',
         'is_active': True,
-        'img_file': 'assets/product_images/pumpkin_pie.jpeg',
+        'img_file': 'assets/product_images/pumpkin_pie.jpg',
         'qty': 1
     },
     {
         'name': 'Apple Cider',
         'description': 'Apple Cider',
         'is_active': True,
-        'img_file': 'assets/product_images/appleciderjelly.jpeg',
+        'img_file': 'assets/product_images/appleciderjelly.jpg',
         'qty': 1
     },
     {

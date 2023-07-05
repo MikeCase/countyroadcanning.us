@@ -4,7 +4,7 @@
 <div class="container mx-auto py-5">
     <p class="h1 harfont">Products</p>
     <div class="container text-center">
-    {% for product in products|batch(4, {'qty':0, 'price': 0.0, 'per_case': False, 'name': '', 'description': '', 'img_file': 0}) %}
+    {% for product in products|batch(3, {'qty':0, 'price': 0.0, 'per_case': False, 'name': '', 'description': '', 'img_file': 0}) %}
         <div class="row mb-4">
             {% for item in product %}
             <div class="col-md-3">

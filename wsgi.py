@@ -1,6 +1,5 @@
-from website import app, first_run
+from website import app
 
 if __name__ == "__main__":
 
-    first_run()
     app.run()
