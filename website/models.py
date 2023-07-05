@@ -6,15 +6,6 @@ product_bundle = db.Table('product_bundle',
                           db.Column('bundle_id', db.Integer, db.ForeignKey('bundles.id'))
                           )
 
-# class ProductBundle(db.Model):
-#     __tablename__ = 'product_bundle'
-
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-#     bundle_id = db.Column(db.Integer, db.ForeignKey('bundles.id'))
-
-#     # product = db.relationship('products', backref='products')
-#     # bundle = db.relationship('bundles', backref='bundles')
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -79,6 +70,7 @@ class Bundle(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255))
-    
+    description = db.Column(db.String(255))
+
     def __repr__(self):
         return self.name

@@ -6,7 +6,7 @@
         <p class="h1 harfont">Cart</p>
         <div class="row justify-content-center">
             <div class="col-md-2">
-            {% set ns = namespace(subtotal=0.0)%}
+            {% set ns = namespace(subtotal=0.00)%}
             {% for item in items %}
                 {% set ns.subtotal = ns.subtotal+item.price %}
             {% endfor %}
@@ -18,26 +18,26 @@
         </div>
     </div>
     <div class="container">
-    {% for item in items %}
+    {% for product in items %}
         <div class="card mb-3">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.desc }}</p>
-                        <p>Price: <small>${{ item.price }}</small></p>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.desc }}</p>
+                        <p>Price: <small>${{ product.price }}</small></p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
                         <form method="POST" action="{{ url_for('cart_bp.update_cart') }}">
-                            <input type="hidden" name="prod_id" value="{{ item.id }}"/>
+                            <input type="hidden" name="prod_id" value="{{ product.id }}"/>
                             <label for="qty" class="form-label">Quantity</label>
-                            <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{item.qty}}"/>
-                            <input type="checkbox" class="form-check-input" name="per_case" {% if item.per_case == True %}checked{% endif %} />
+                            <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{product.qty}}"/>
+                            <input type="checkbox" class="form-check-input" name="per_case" {% if product.per_case == True %}checked{% endif %} />
                             <label for="per_case" class="form-check-label">Case</label><br/>
                             <button class="btn btn-sm" name="submit"><i class="bi bi-save text-success"></i></button>
-                            <a href="{{ url_for('cart_bp.rem_item', product_id=item.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
+                            <a href="{{ url_for('cart_bp.rem_item', product_id=product.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
                         </form>
                     </div>
                 </div>

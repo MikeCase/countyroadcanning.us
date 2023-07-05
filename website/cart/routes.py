@@ -1,6 +1,6 @@
 from flask import session, redirect, url_for, request, render_template
 from website.models import Product
-from .cart import cart_bp
+from . import cart_bp
 
 # Main route, Cart homepage
 @cart_bp.route('/')

@@ -10,6 +10,7 @@ import flask_login as login
 # Create DB instance.
 db = SQLAlchemy()
 
+
 from .forms import LoginForm
 
 

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto py-5">
+    <div class="container mb-4">
+        <p class="h1 harfont">Bundles</p>
+    </div>
+    <div class="container">
+    {% for bundle in items %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bundle.name }}</h5>
+                        <p class="card-text">{{ bundle.desc }}</p>
+                        <p>Price: <small>${{ bundle.price }}</small></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <form method="POST" action="{{ url_for('cart_bp.update_cart') }}">
+                            <input type="hidden" name="prod_id" value="{{ bundle.id }}"/>
+                            <label for="qty" class="form-label">Quantity</label>
+                            <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{bundle.qty}}"/>
+                            <input type="checkbox" class="form-check-input" name="per_case" {% if bundle.per_case == True %}checked{% endif %} />
+                            <label for="per_case" class="form-check-label">Case</label><br/>
+                            <button class="btn btn-sm" name="submit"><i class="bi bi-save text-success"></i></button>
+                            <a href="{{ url_for('cart_bp.rem_item', bundle_id=bundle.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
