@@ -3,9 +3,9 @@
 {% block content %}
     <div class="container px-4 py-1 my-5 text-center">
         <div class="container">
-        <img src="{{ url_for('static', filename='assets/banner_logous.png' ) }}" class="d-block mx-auto mb-4 rounded-4 border border-5 border-secondary" alt style="height: 25rem;">
+        <img src="{{ url_for('static', filename='assets/banner_logous.png' ) }}" class="d-block mx-auto mb-4 rounded-4 border border-5 border-secondary" style="max-width: 100%; height: auto;" alt="...">
         </div>
-        <div id="carouselExample" class="carousel slide mx-auto " style="width: 35rem;">
+        <div id="carouselExample" class="carousel slide mx-auto" >
             <div class="carousel-inner">
             {% for product in products %}
                 {% if loop.index0 == 0 %}
@@ -13,7 +13,7 @@
                 {% else %}
                 <div class="carousel-item">
                 {% endif %}
-                    <img src="{{ url_for('static', filename=product.img_file ) }}" class="d-sm-block border border-5 border-secondary rounded-4" style="width: 35rem;" alt="...">
+                    <img src="{{ url_for('static', filename=product.img_file ) }}" class=" border border-5 border-secondary rounded-4" style="max-width: 100%; height: auto;" alt="...">
                 </div>
             {% endfor %}
             </div>

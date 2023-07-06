@@ -70,3 +70,22 @@ products = [
         'qty': 1
     },
 ]
+
+bundles = [
+    {
+        'name': 'Party Bundle',
+        'description': 'Great jellies for all your exciting parties!'
+    },
+    {
+        'name': 'Summer Bundle',
+        'description': 'Jellies and jams for that hot texas summer!'
+    },
+    {
+        'name': 'Christmas Bundle',
+        'description': 'Great jellies for the christmas season!'
+    },
+    {
+        'name': 'Fall Bundle',
+        'description': 'Great jellies for those cool fall days!'
+    }
+]

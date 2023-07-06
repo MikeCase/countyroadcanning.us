@@ -4,6 +4,8 @@ from . import bundle_bp
 
 @bundle_bp.route('/')
 def bundle_index():
-    return render_template('bundles/index.html')
+    bundle = Bundle.query.all()
+    print(bundle)
+    return render_template('bundles/index.html', bundles=bundle)
 
 

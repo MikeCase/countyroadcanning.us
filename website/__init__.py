@@ -2,7 +2,6 @@ import os
 import os.path as op
 from flask import Flask
 import dotenv
-# from dotenv import load_dotenv
 import flask_login as login
 from flask_migrate import Migrate
 from .extensions import db, Admin, MyAdminIndexView, MyModelView, ProductView, BundleView, FileView
@@ -10,16 +9,18 @@ from .models import User, Product, Bundle
 from website.cart import cart_bp
 from website.bundles import bundle_bp
 from werkzeug.security import generate_password_hash
-from .initial_products import products
+from .initial_products import products, bundles
+
+
 dotfile = dotenv.find_dotenv()
 dotenv.load_dotenv(dotfile)
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['ENV'] = os.getenv("ENV")
+    app.config['ENV'] = int(os.getenv("ENV"))
 
-    if app.config['ENV'] == 'prod':
+    if app.config['ENV'] == 1:
         app.config.from_object('conf.ProdConf')
     else:
         app.config.from_object('conf.DevConf')
@@ -32,7 +33,16 @@ def create_app():
 
     migrate = Migrate(app, db)
 
+    ## Check to see if this is the first run of the app.
+    if dotenv.get_key(dotfile, key_to_get='FIRSTRUN') == "True":
+        first_run(app)
+        dotenv.set_key(dotfile, key_to_set='FIRSTRUN', value_to_set="False")
+    else:
+        print("DB already available. Lets run this puppy!")
+        
+    
     init_login(app)
+   
     ## init flask-admin
     filespath = op.join(op.dirname(__file__), 'static/assets/product_images')
 
@@ -75,21 +85,15 @@ def first_run(app):
                 p = Product(**product)
                 print(f'adding product {product["name"]} to the db.')
                 db.session.add(p)
+            for bundle in bundles:
+                b = Bundle(**bundle)
+                print(f'Adding bundle {b.name} to DB.')
+                db.session.add(b)
 
             print("Commiting changes.")
             db.session.commit()
 
 
-
-
 app = create_app()
-
-## Check to see if this is the first run of the app.
-if dotenv.get_key(dotfile, key_to_get='FIRSTRUN') == "True":
-    first_run(app)
-    dotenv.set_key(dotfile, key_to_set='FIRSTRUN', value_to_set="False")
-else:
-    print("DB already available. Lets run this puppy!")
-
 
 import website.routes

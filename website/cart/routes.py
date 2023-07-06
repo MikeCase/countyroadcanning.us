@@ -2,13 +2,21 @@ from flask import session, redirect, url_for, request, render_template
 from website.models import Product
 from . import cart_bp
 
+
 # Main route, Cart homepage
 @cart_bp.route('/')
 def list():
     if 'cart' not in session:
         return render_template('cart/no_items.html')
+    
+    ## Probably better here than in the front end.
+    subtotal = 0.00
 
-    return render_template('cart/index.html', items=session['cart'])
+    for price in session['cart']:
+        subtotal += price['price']
+
+
+    return render_template('cart/index.html', items=session['cart'], subtotal=subtotal)
 
 
 # Add an item to the cart.
@@ -27,10 +35,12 @@ def add_item_to_cart():
 
     return redirect(url_for('cart_bp.list'))
 
+
 # Checkout pass off to paypal.
 @cart_bp.route('/checkout')
 def checkout():
     pass
+
 
 # Clear the entire cart.
 @cart_bp.route('/clear')
@@ -38,6 +48,7 @@ def clear_cart():
     if 'cart' in session:
         session['cart'] = []
         return redirect(url_for('cart_bp.list'))
+
 
 # Remove one item from the cart
 @cart_bp.route('/remove_item/<int:product_id>', methods=['GET'])
@@ -47,6 +58,7 @@ def rem_item(product_id):
             session['cart'].remove(item)
             session.modified = True
     return redirect(url_for('cart_bp.list'))
+
 
 # Update an item in the cart.
 @cart_bp.route('/update_cart', methods=['POST'])
@@ -60,7 +72,7 @@ def update_cart():
     product = Product.query.filter(Product.id==product_id).first()
 
     # Just some cleanup.
-    jars_per_case = 9
+    jars_per_case = 12
 
     if purchase_case == None:
         purchase_case = False

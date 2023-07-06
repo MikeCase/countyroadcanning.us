@@ -7,14 +7,17 @@
     {% for product in products|batch(3, {'qty':0, 'price': 0.0, 'per_case': False, 'name': '', 'description': '', 'img_file': 0}) %}
         <div class="row mb-4">
             {% for item in product %}
-            <div class="col-md-3">
+            <div class="col-md-4">
             {% if item.img_file == 0 %}
             {% else %}
-                <div class="card mx-auto shadow" style="width: 18rem;">
-                    <img src="{{ url_for('static', filename=item.img_file) }}" class="card-img-top" alt="...">
+                <div class="card mx-auto shadow mb-4">
+                    <img src="{{ url_for('static', filename=item.img_file) }}" class="card-img-top" style="max-width: 100%; height: auto;"alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ item.name }}</h5>
                         <p class="card-text">{{ item.description }}</p>
+                        {% if item.bundles %}
+                            <i class="bi bi-asterisk text-primary"></i>
+                        {% endif %}
                         {% if item.qty >= 1 %}
                             <form action="/cart/add" method="POST">
                                 <button type="submit" class="btn btn-primary" name="product_id" value="{{item.id}}">Add to cart</button>

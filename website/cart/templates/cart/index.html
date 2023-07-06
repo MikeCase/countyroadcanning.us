@@ -6,11 +6,7 @@
         <p class="h1 harfont">Cart</p>
         <div class="row justify-content-center">
             <div class="col-md-2">
-            {% set ns = namespace(subtotal=0.00)%}
-            {% for item in items %}
-                {% set ns.subtotal = ns.subtotal+item.price %}
-            {% endfor %}
-                <p>SubTotal: <small>${{ns.subtotal}}</small></p>
+                <p>SubTotal: <small>${{ subtotal }}</small></p>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-primary" name="checkout">Checkout</button>
@@ -25,7 +21,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.desc }}</p>
-                        <p>Price: <small>${{ product.price }}</small></p>
+                        <p class="card-text">Price: <small>${{ product.price }}</small></p>
                     </div>
                 </div>
                 <div class="col-md-4">
