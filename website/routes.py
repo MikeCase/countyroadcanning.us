@@ -1,5 +1,4 @@
 from . import app
-# from .extensions import db
 from PIL import Image
 from flask import render_template, url_for
 from .models import Product

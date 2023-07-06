@@ -8,6 +8,7 @@ from .extensions import db, Admin, MyAdminIndexView, MyModelView, ProductView, B
 from .models import User, Product, Bundle
 from website.cart import cart_bp
 from website.bundles import bundle_bp
+from website.paypal import paypal_bp
 from werkzeug.security import generate_password_hash
 from .initial_products import products, bundles
 
@@ -52,8 +53,10 @@ def create_app():
     admin.add_view(BundleView(Bundle, db.session))
     admin.add_view(FileView(filespath, '/static/assets/product_images/', name='Images'))
     
+    ## register any blueprints the app has.
     app.register_blueprint(cart_bp, url_prefix='/cart')
     app.register_blueprint(bundle_bp, url_prefix='/bundles')
+    app.register_blueprint(paypal_bp, url_prefix="/payments")
 
     return app
 
