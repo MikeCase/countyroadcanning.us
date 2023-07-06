@@ -63,7 +63,7 @@ def first_run(app):
         username = os.getenv('ADMINUSER')
         email = os.getenv('ADMINEMAIL')
         pwd = os.getenv('ADMINPWD')
-        pwhash = generate_password_hash('pwd')
+        pwhash = generate_password_hash(pwd)
 
         user = User.query.filter(User.id == 0).first()
 

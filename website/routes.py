@@ -29,7 +29,7 @@ def sort_products_by_image_size(products):
 @app.route('/')
 def home():
     # print('home')
-    products = Product.query.filter_by(is_active=True).all()
+    products = Product.query.all()
     return render_template('home/home.html', products=products)
 
 @app.route('/about')

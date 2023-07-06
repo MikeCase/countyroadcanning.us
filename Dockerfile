@@ -9,4 +9,4 @@ ADD . /app/
 
 EXPOSE 5050
 
-CMD ["hypercorn", "wsgi:website", "--bind", "0.0.0.0:5050", "--reload"]
+CMD ["hypercorn", "wsgi:app", "--bind", "0.0.0.0:5050", "--reload"]
