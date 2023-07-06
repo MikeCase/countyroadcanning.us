@@ -11,7 +11,7 @@ def sort_products_by_image_size(products):
     for product in products:
         ## Sort images by size, put all long images in the rear.
         cur_product = product
-        cur_im = Image.open(f'website/static/{cur_product.img_file}')
+        cur_im = Image.open(f'website/static/assets/product_images/{cur_product.img_file}')
         cur_w, cur_h = cur_im.size
 
         # Fairly simple sort, if the images are wider than they are tall
@@ -30,7 +30,8 @@ def sort_products_by_image_size(products):
 def home():
     # print('home')
     products = Product.query.all()
-    return render_template('home/home.html', products=products)
+    img_dir = 'assets/product_images/'
+    return render_template('home/home.html', products=products, img_dir=img_dir)
 
 @app.route('/about')
 def about_us():
@@ -40,6 +41,7 @@ def about_us():
 def products():
     products = Product.query.filter_by(is_active=True).all()
 
+    img_dir = 'assets/product_images/'
     sorted_products = sort_products_by_image_size(products)
 
-    return render_template('products/products.html', products=sorted_products)
+    return render_template('products/products.html', products=sorted_products, img_dir=img_dir)

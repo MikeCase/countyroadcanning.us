@@ -11,7 +11,7 @@
             {% if item.img_file == 0 %}
             {% else %}
                 <div class="card mx-auto shadow mb-4">
-                    <img src="{{ url_for('static', filename=item.img_file) }}" class="card-img-top" style="max-width: 100%; height: auto;"alt="...">
+                    <img src="{{ url_for('static', filename=img_dir+item.img_file) }}" class="card-img-top" style="max-width: 100%; height: auto;"alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ item.name }}</h5>
                         <p class="card-text">{{ item.description }}</p>

@@ -13,7 +13,7 @@
                 {% else %}
                 <div class="carousel-item">
                 {% endif %}
-                    <img src="{{ url_for('static', filename=product.img_file ) }}" class=" border border-5 border-secondary rounded-4" style="max-width: 100%; height: auto;" alt="...">
+                    <img src="{{ url_for('static', filename=img_dir+product.img_file ) }}" class=" border border-5 border-secondary rounded-4" style="max-width: 100%; height: auto;" alt="...">
                 </div>
             {% endfor %}
             </div>
