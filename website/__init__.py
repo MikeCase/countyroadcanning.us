@@ -4,11 +4,12 @@ from flask import Flask
 import dotenv
 import flask_login as login
 from flask_migrate import Migrate
-from .extensions import db, Admin, MyAdminIndexView, MyModelView, ProductView, BundleView, FileView
+from .extensions import db, Admin, MyAdminIndexView, MyModelView, PaymentView, ProductView, BundleView, FileView
 from .models import User, Product, Bundle
+from website.payments.models import SoldProduct
 from website.cart import cart_bp
 from website.bundles import bundle_bp
-from website.paypal import paypal_bp
+from website.payments import payments_bp
 from werkzeug.security import generate_password_hash
 from .initial_products import products, bundles
 
@@ -40,10 +41,10 @@ def create_app():
         dotenv.set_key(dotfile, key_to_set='FIRSTRUN', value_to_set="False")
     else:
         print("DB already available. Lets run this puppy!")
-        
-    
+
+
     init_login(app)
-   
+
     ## init flask-admin
     filespath = op.join(op.dirname(__file__), 'static/assets/product_images')
 
@@ -51,12 +52,13 @@ def create_app():
     admin.add_view(MyModelView(User, db.session))
     admin.add_view(ProductView(Product, db.session))
     admin.add_view(BundleView(Bundle, db.session))
+    admin.add_view(PaymentView(SoldProduct, db.session))
     admin.add_view(FileView(filespath, '/static/assets/product_images/', name='Images'))
-    
+
     ## register any blueprints the app has.
     app.register_blueprint(cart_bp, url_prefix='/cart')
     app.register_blueprint(bundle_bp, url_prefix='/bundles')
-    app.register_blueprint(paypal_bp, url_prefix="/payments")
+    app.register_blueprint(payments_bp, url_prefix="/payments")
 
     return app
 

@@ -17,24 +17,24 @@ class User(db.Model):
     @property
     def is_authenticated(self):
         return True
-    
+
     @property
     def is_active(self):
         return True
-    
+
     @property
     def is_anonymous(self):
         return False
-    
+
     def get_id(self):
         return self.id
-    
+
     @property
     def __unicode__(self):
         return self.username
-    
+
 class Product(db.Model):
-    
+
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -44,26 +44,27 @@ class Product(db.Model):
     price = db.Column(db.Double)
     img_file = db.Column(db.String(255))
     qty = db.Column(db.Integer, default=15)
-    bundles = db.relationship('Bundle', secondary=product_bundle, backref=db.backref('Product', lazy='select'))
+    bundles = db.relationship('Bundle', secondary=product_bundle, backref=db.backref('products', lazy='select'))
+    sales_id = db.Column(db.Integer, db.ForeignKey('id'))
 
     @property
     def get_qty(self):
         return self.qty
-    
+
     @property
     def get_price(self):
         return self.price
-    
+
     # @property
     # def get_bundles(self):
     #     return self.bundles
-    
+
     def get_id(self):
         return self.id
-    
+
     def __repr__(self):
         return self.name
-    
+
 class Bundle(db.Model):
 
     __tablename__ = 'bundles'

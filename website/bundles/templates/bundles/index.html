@@ -13,8 +13,8 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ bundle.name }}</h5>
                         <p class="card-text">{{ bundle.description }}</p>
-                        {% for product in bundle.Product %}
-                            <p class="card-text">{{ product }}</p>
+                        {% for product in bundle.products %}
+                            <p class="card-text">{{ product.name }}</p>
                         {% endfor %}
                     </div>
                 </div>

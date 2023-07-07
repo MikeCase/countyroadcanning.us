@@ -26,7 +26,7 @@ class ProductView(ModelView):
         super(ProductView, self).__init__(*args, **kwargs)
 
     can_view_details = True
-    column_list = ['name', 'description', 'is_active', 'price', 'img_file', 'qty', 'bundles']
+    column_list = ['name', 'description', 'is_active', 'price', 'img_file', 'qty', 'bundles',]
 
     def is_accessible(self):
         return login.current_user.is_authenticated
@@ -37,11 +37,23 @@ class BundleView(ModelView):
         super(BundleView, self).__init__(*args, **kwargs)
 
     can_view_details = True
-    column_list = ['name']
+    # column_list = ['name']
     
     def is_accessible(self):
         return login.current_user.is_authenticated
     
+class PaymentView(ModelView):
+
+    def __init__(self, *args, **kwargs):
+        super(PaymentView, self).__init__(*args, **kwargs)
+
+    can_view_details = True
+    # column_list = ['name']
+    
+    def is_accessible(self):
+        return login.current_user.is_authenticated
+
+
 class FileView(FileAdmin):
 
     def __init__(self, *args, **kwargs):
