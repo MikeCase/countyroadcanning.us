@@ -45,7 +45,7 @@ class Product(db.Model):
     img_file = db.Column(db.String(255))
     qty = db.Column(db.Integer, default=15)
     bundles = db.relationship('Bundle', secondary=product_bundle, backref=db.backref('products', lazy='select'))
-    sales_id = db.Column(db.Integer, db.ForeignKey('id'))
+    
 
     @property
     def get_qty(self):

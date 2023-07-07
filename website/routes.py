@@ -44,3 +44,11 @@ def products():
     sorted_products = sort_products_by_image_size(products)
 
     return render_template('products/products.html', products=sorted_products, img_dir=img_dir)
+
+@app.route('/products/view/<int:product_id>', methods=['GET'])
+def product_view(product_id):
+    product = Product.query.filter(Product.id == product_id).first()
+    if product:
+        return render_template('products/product_page.html', product=product)
+    else:
+        return render_template('products/not_found.html')
