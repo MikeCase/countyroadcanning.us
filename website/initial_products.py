@@ -2,7 +2,7 @@ products = [
     {
         'name': 'Pear Moscato',
         'description': 'Pear Moscato',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'pearmoscato.jpeg',
         'qty': 1
@@ -10,7 +10,7 @@ products = [
     {
         'name': 'Bacon Jalapeno',
         'description': 'Bacon Jalapeno',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'baconjalapeno.jpeg',
         'qty': 1
@@ -18,7 +18,7 @@ products = [
     {
         'name': 'Jalapeno',
         'description': 'Jalapeno',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'Jalapeno.jpeg',
         'qty': 1
@@ -26,7 +26,7 @@ products = [
     {
         'name': 'Raspberry Jalapeno',
         'description': 'Raspberry Jalapeno',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'raspberryjalapeno.jpeg',
         'qty': 1
@@ -34,7 +34,7 @@ products = [
     {
         'name': 'Pumpkin Pie',
         'description': 'Pumpkin Pie',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'pumpkin_pie.jpg',
         'qty': 1
@@ -42,7 +42,7 @@ products = [
     {
         'name': 'Apple Cider',
         'description': 'Apple Cider',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'appleciderjelly.jpg',
         'qty': 1
@@ -50,7 +50,7 @@ products = [
     {
         'name': 'Blackberry Merlot',
         'description': 'Blackberry Merlot',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'blackberrymerlot.jpeg',
         'qty': 1
@@ -58,7 +58,7 @@ products = [
     {
         'name': 'Peach',
         'description': 'Peach',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'Peach.jpeg',
         'qty': 1
@@ -66,7 +66,7 @@ products = [
     {
         'name': 'Cranberry Pomegranet',
         'description': 'Cranberry Pomegranet',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'Cran.Pom.jpeg',
         'qty': 1
@@ -74,7 +74,7 @@ products = [
     {
         'name': 'Apple Pie',
         'description': 'Apple Pie',
-        'is_active': False,
+        'is_active': True,
         'price': 6.25,
         'img_file': 'applepie.jpeg',
         'qty': 1

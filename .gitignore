@@ -4,3 +4,4 @@ instance/db.sqlite
 conf.py
 origin.pem
 origin.priv.pem
+website/initial_products.py

@@ -1,96 +1,44 @@
+from flask import session
 from flask_sqlalchemy import SQLAlchemy
-from flask import redirect, url_for, request
-from flask_admin import AdminIndexView, Admin
-from flask_admin.contrib.fileadmin import FileAdmin
-from flask_admin import helpers, expose
-from flask_admin.contrib.sqla import ModelView
-import flask_login as login
-
+from PIL import Image
 
 # Create DB instance.
 db = SQLAlchemy()
 
+def sort_products_by_image_size(products):
 
-from .forms import LoginForm
+    sorted_products = []
+    for product in products:
+        # Sort images by size, put all long images in the rear.
+        cur_product = product
+        cur_im = Image.open(
+            f'website/static/assets/product_images/{cur_product.img_file}'
+        )
+        cur_w, cur_h = cur_im.size
 
+        # Fairly simple sort, if the images are wider than they are tall
+        # then we insert the product in the front, otherwise we append it
+        # at the end.
+        if cur_w > cur_h:
+            sorted_products.insert(0, cur_product)
+        elif cur_h > cur_w:
+            sorted_products.append(cur_product)
 
-# Create customized model view class
-class MyModelView(ModelView):
-
-    def is_accessible(self):
-        return login.current_user.is_authenticated
-
-class ProductView(ModelView):
-
-    def __init__(self, *args, **kwargs):
-        super(ProductView, self).__init__(*args, **kwargs)
-
-    can_view_details = True
-    column_list = ['name', 'description', 'is_active', 'price', 'img_file', 'qty', 'bundles',]
-
-    def is_accessible(self):
-        return login.current_user.is_authenticated
-    
-class BundleView(ModelView):
-
-    def __init__(self, *args, **kwargs):
-        super(BundleView, self).__init__(*args, **kwargs)
-
-    can_view_details = True
-    # column_list = ['name']
-    
-    def is_accessible(self):
-        return login.current_user.is_authenticated
-    
-class PaymentView(ModelView):
-
-    def __init__(self, *args, **kwargs):
-        super(PaymentView, self).__init__(*args, **kwargs)
-
-    can_view_details = True
-    # column_list = ['name']
-    
-    def is_accessible(self):
-        return login.current_user.is_authenticated
+    return sorted_products
 
 
-class FileView(FileAdmin):
+def get_cart_count():
+    if 'cart' not in session:
+        session['cart'] = []
+        return 0
+    else:
+        total_count = len(session['cart']) or 0
+        return total_count
 
-    def __init__(self, *args, **kwargs):
-        super(FileView, self).__init__(*args, **kwargs)
 
-    can_view_details = True
-    column_list = ['name', 'size', 'date']
-    
-    def is_accessible(self):
-        return login.current_user.is_authenticated
-
-# Create customized index view class that handles login & registration
-class MyAdminIndexView(AdminIndexView):
-
-    @expose('/')
-    def index(self):
-        if not login.current_user.is_authenticated:
-            return redirect(url_for('.login_view'))
-        return super(MyAdminIndexView, self).index()
-
-    @expose('/login/', methods=('GET', 'POST'))
-    def login_view(self):
-        # handle user login
-        login_form = LoginForm(request.form)
-        if helpers.validate_form_on_submit(login_form):
-            user = login_form.get_user()
-            print(user)
-            login.login_user(user)
-
-        if login.current_user.is_authenticated:
-            return redirect(url_for('.index'))
-        link = '<p>Don\'t have an account? Sorry, you can\'t be here then</p>'
-        self._template_args['form'] = login_form
-        self._template_args['link'] = link
-        return super(MyAdminIndexView, self).index()
-
-    @expose('/logout/')
-    def logout_view(self):
-        login.logout_user()
-        return redirect(url_for('home'))
+def get_cart():
+    if 'cart' not in session:
+        session['cart'] = []
+        return session['cart']
+    else:
+        return session['cart']

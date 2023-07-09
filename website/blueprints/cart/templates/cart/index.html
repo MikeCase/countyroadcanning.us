@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto py-5">
+
     <div class="container mb-4">
         <p class="h1 harfont">Cart</p>
         <div class="row justify-content-center">
@@ -9,7 +9,9 @@
                 <p>SubTotal: <small>${{ subtotal }}</small></p>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-primary" name="checkout">Checkout</button>
+                <form action="{{ url_for('payments_bp.process_payment')}}" method="post">
+                    <button type='submit' class="btn btn-primary" name="checkout">Checkout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -26,14 +28,14 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
-                        <form method="POST" action="{{ url_for('cart_bp.update_cart') }}">
+                        <form method="POST" action="{{ url_for('.update_cart') }}">
                             <input type="hidden" name="prod_id" value="{{ product.id }}"/>
                             <label for="qty" class="form-label">Quantity</label>
                             <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{product.qty}}"/>
                             <input type="checkbox" class="form-check-input" name="per_case" {% if product.per_case == True %}checked{% endif %} />
                             <label for="per_case" class="form-check-label">Case</label><br/>
                             <button class="btn btn-sm" name="submit"><i class="bi bi-save text-success"></i></button>
-                            <a href="{{ url_for('cart_bp.rem_item', product_id=product.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
+                            <a href="{{ url_for('.rem_item', product_id=product.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
                         </form>
                     </div>
                 </div>
@@ -41,5 +43,5 @@
         </div>
     {% endfor %}
     </div>
-</div>
+
 {% endblock content %}

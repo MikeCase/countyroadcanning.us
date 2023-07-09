@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {% block content %}
-<div class="container mx-auto py-5">
+
     <p class="h1 harfont">Products</p>
     <div class="container text-center">
     {% for product in products|batch(3, {'qty':0, 'price': 0.0, 'per_case': False, 'name': '', 'description': '', 'img_file': 0}) %}
@@ -11,7 +11,7 @@
             {% if item.img_file == 0 %}
             {% else %}
                 <div class="card mx-auto shadow mb-4">
-                    <a href="{{ url_for('product_view', product_id=item.id)}}">
+                    <a href="{{ url_for('product_bp.product_view', product_id=item.id)}}">
                         <img src="{{ url_for('static', filename=img_dir+item.img_file) }}" class="card-img-top" style="max-width: 100%; height: auto;"alt="...">
                     </a>
                     <div class="card-body">
@@ -21,7 +21,7 @@
                             <i class="bi bi-asterisk text-primary"></i>
                         {% endif %}
                         {% if item.qty >= 1 %}
-                            <form action="/cart/add" method="POST">
+                            <form action="{{ url_for('cart_bp.add_item_to_cart')}}", method="post">
                                 <button type="submit" class="btn btn-primary" name="product_id" value="{{item.id}}">Add to cart</button>
                             </form>
                         {% else %}
@@ -35,5 +35,5 @@
         </div>
         {% endfor %}
     </div>
-</div>
+
 {% endblock %}
