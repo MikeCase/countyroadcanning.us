@@ -130,3 +130,7 @@ def home():
 def about_us():
     total_items = get_cart_count()
     return render_template('about/about.html', total_count=total_items)
+
+@app.context_processor
+def custom_context():
+    return dict(get_cart_count=get_cart_count())

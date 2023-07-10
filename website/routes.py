@@ -1,4 +1,4 @@
-from website import app, product_bp
+from website import app
 from flask import render_template
 from .extensions import get_cart_count
 from .blueprints.products.models import Product

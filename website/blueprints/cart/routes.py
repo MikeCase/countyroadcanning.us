@@ -2,6 +2,7 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for
 from website.extensions import get_cart_count
 from website.blueprints.products.models import Product
+from website.forms import ShoppingCartForm
 
 
 cart_bp = Blueprint('cart_bp', __name__, template_folder='templates', static_folder='static', static_url_path='assets', url_prefix='/cart')
@@ -19,7 +20,7 @@ def list():
         subtotal += price['price']
 
     total_items = get_cart_count()
-
+    cart_form = ShoppingCartForm(request.form)
     return render_template('cart/index.html', items=session['cart'], subtotal=subtotal, total_count=total_items)
 
 

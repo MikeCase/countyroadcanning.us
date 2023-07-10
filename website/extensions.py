@@ -26,7 +26,7 @@ def sort_products_by_image_size(products):
 
     return sorted_products
 
-
+## Used to add a badge at the top of the base template displaying the shopping cart count.
 def get_cart_count():
     if 'cart' not in session:
         session['cart'] = []
@@ -35,7 +35,7 @@ def get_cart_count():
         total_count = len(session['cart']) or 0
         return total_count
 
-
+## Get the contents of the shopping cart.
 def get_cart():
     if 'cart' not in session:
         session['cart'] = []
