@@ -15,9 +15,11 @@ from website.blueprints.payments.routes import payments_bp
 from website.blueprints.payments.models import Sales
 from website.blueprints.products.routes import product_bp
 from website.blueprints.products.models import Product
+from website.blueprints.blog.routes import blog_bp
+from website.blueprints.blog.models import Blog
 
 from website.admin_viewmodels import (BundleView, FileView, MyAdminIndexView,
-                               MyModelView, PaymentView, ProductView)
+                               MyModelView, PaymentView, ProductView, BlogView)
 from website.extensions import db, get_cart_count
 from website.initial_products import bundles, products
 from website.models import User
@@ -95,6 +97,7 @@ def create_app():
     admin = Admin(app, name='CRC', index_view=MyAdminIndexView(),
                   base_template='my_master.html', template_mode='bootstrap4')
     admin.add_view(MyModelView(User, db.session))
+    admin.add_view(BlogView(Blog, db.session))
     admin.add_view(ProductView(Product, db.session))
     admin.add_view(BundleView(Bundle, db.session))
     admin.add_view(PaymentView(Sales, db.session))
@@ -105,12 +108,9 @@ def create_app():
     app.register_blueprint(bundle_bp, url_prefix='/bundles')
     app.register_blueprint(payments_bp, url_prefix="/payments")
     app.register_blueprint(product_bp, url_prefix="/products")
+    app.register_blueprint(blog_bp, url_prefix="/blog")
 
     return app
-
-
-
-
 
 
 app = create_app()
@@ -133,4 +133,4 @@ def about_us():
 
 @app.context_processor
 def custom_context():
-    return dict(get_cart_count=get_cart_count())
+    return dict(get_cart_count=get_cart_count(), image_folder='assets/product_images/')

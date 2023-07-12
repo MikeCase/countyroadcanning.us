@@ -9,5 +9,10 @@ bundle_bp = Blueprint('bundle_bp', __name__, template_folder='templates', static
 @bundle_bp.route('/')
 def bundle_index():
     bundle = Bundle.query.all()
-    total_items = get_cart_count()
     return render_template('bundles/index.html', bundles=bundle)
+
+
+@bundle_bp.route("/view/<int:bundle_id>")
+def bundle_view(bundle_id):
+    bundle = Bundle.query.filter(Bundle.id == bundle_id).first()
+    return render_template('bundles/bundle_page.html', bundle=bundle)

@@ -1,47 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <div class="container mb-4">
-        <p class="h1 harfont">Cart</p>
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <p>SubTotal: <small>${{ subtotal }}</small></p>
+    <div class="">
+        <p class="harfont text-5xl">Cart</p>
+    </div>
+    <div class="grid grid-flow-row auto-rows-auto  mt-2">
+    {% for product in items %}
+        <div class="grid grid-cols-2 mt-4 border-b-slate-800">
+            <div>
+                <h5 class="text-xl">{{ product.name }}</h5>
+                <p class="">{{ product.desc }}</p>
+                <p class="mt-5">Price: <small>${{ product.price }}</small></p>
             </div>
-            <div class="col-md-2">
-                <form action="{{ url_for('payments_bp.process_payment')}}" method="post">
-                    <button type='submit' class="btn btn-primary" name="checkout">Checkout</button>
+            <div class="">
+                <form method="POST" action="{{ url_for('.update_cart') }}">
+                    <input type="hidden" name="prod_id" value="{{ product.id }}"/>
+                    <label for="qty" class="">
+                        Quantity
+                        <input type="number" name="qty" id="qty" class="block w-1/4 border-0 border-b-2 rounded-lg border-slate-400 focus:ring-0 focus:border-slate-700" value="{{product.qty}}"/>
+                    </label>
+                    <label for="per_case" class="">
+                        Case
+                        <input type="checkbox" class="rounded p-0 focus:ring-0" name="per_case" {% if product.per_case == True %}checked{% endif %} />
+                    </label><br/>
+                    <div class="grid grid-cols-2 w-16">
+                        <button class="text-green-700" name="submit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                          </svg>                          
+                        </button>
+                        <a href="{{ url_for('.rem_item', product_id=product.id) }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </a>
+
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-    <div class="container">
-    {% for product in items %}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.desc }}</p>
-                        <p class="card-text">Price: <small>${{ product.price }}</small></p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card-body">
-                        <form method="POST" action="{{ url_for('.update_cart') }}">
-                            <input type="hidden" name="prod_id" value="{{ product.id }}"/>
-                            <label for="qty" class="form-label">Quantity</label>
-                            <input type="number" name="qty" id="qty" class="form-control form-control-sm w-50" value="{{product.qty}}"/>
-                            <input type="checkbox" class="form-check-input" name="per_case" {% if product.per_case == True %}checked{% endif %} />
-                            <label for="per_case" class="form-check-label">Case</label><br/>
-                            <button class="btn btn-sm" name="submit"><i class="bi bi-save text-success"></i></button>
-                            <a href="{{ url_for('.rem_item', product_id=product.id) }}"><i class="bi bi-trash3 text-danger"></i></a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     {% endfor %}
+    <div class="grid grid-cols-2 mt-16">
+        <div class="">
+            <form action="{{ url_for('payments_bp.process_payment')}}" method="post">
+                <button type='submit' class="pill-button-std" name="checkout">Checkout</button>
+            </form>
+        </div>
+        <div class="">
+            <p>SubTotal: <small>${{ subtotal }}</small></p>
+        </div>
+    </div>
     </div>
 
 {% endblock content %}

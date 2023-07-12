@@ -1,3 +1,27 @@
 {% macro cart_count() %}
     <a href="{{ url_for('cart_bp.list')}}"><i class="bi bi-cart-fill position-relative" style="font-size: 24px;">{% if get_cart_count > 0%}<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger" style="font-size: 8px;">{{ get_cart_count }}</span>{% endif %}</i></a>
 {% endmacro %}
+
+{% macro blog_posts() %}
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-12">
+    {% for i in range(3) %}
+    <div>
+        <div class="m-auto max-w-sm p-0 bg-white border border-gray-200 rounded-lg shadow border-gray-400">
+            <div class="p-6">
+                <div class="pb-5 ">
+                    <a href="#" class="mb-2 text-2xl font-bold tracking-tight text-slate-600 hover:text-slate-700 hover:underline w-2/3">
+                        blog title
+                    </a>
+                </div>
+                <div>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">short excerpt from blog should be a couple lines long but not like a novel or anything.</p>
+                    <a href="#" class="pill-button-std">
+                        Read more
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}

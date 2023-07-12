@@ -19,7 +19,7 @@ class Product(db.Model):
     price = db.Column(db.Double)
     img_file = db.Column(db.String(255))
     qty = db.Column(db.Integer, default=15)
-    bundles = db.relationship('Bundle', secondary=product_bundle)
+    bundles = db.relationship('Bundle', secondary=product_bundle, backref='products')
 
     @property
     def get_qty(self):

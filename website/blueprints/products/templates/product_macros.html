@@ -1,0 +1,29 @@
+{% macro product_list() %}
+    {% for product in products %}
+        <div>
+            <div class="m-auto max-w-sm p-0 bg-white border border-gray-200 rounded-lg shadow border-gray-400">
+                <div class="rounded-lg mx-auto bg-contain bg-center p-4 drop-shadow-md ">
+                    <img src="{{ url_for('static', filename=image_folder+product.img_file)}}" class="w-full border-2 border-slate-400 rounded-lg drop-shadow hover:drop-shadow-md"/>
+                </div>
+                <div class="p-6">
+                    <a href="{{ url_for('product_bp.product_view', product_id=product.id) }}" class="mb-2 text-2xl font-bold tracking-tight site-link-std w-2/3">
+                        {{ product.name }}
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ product.description }}</p>
+                    <div class="grid grid-cols-2">
+                        <div>
+                            <a href="{{ url_for('product_bp.product_view', product_id=product.id) }}" class="pill-button-std">
+                                Read more
+                            </a>
+                        </div>
+                        <div class="justify-self-end">
+                            <form action="{{ url_for('cart_bp.add_item_to_cart')}}", method="post">
+                                <button type="submit" class="pill-button-std" name="product_id" value="{{product.id}}">Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}

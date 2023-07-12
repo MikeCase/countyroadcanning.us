@@ -44,6 +44,13 @@ class PaymentView(MyModelView):
     can_view_details = True
     column_list = ['sale_price', 'sale_date', 'product_id']
 
+class BlogView(MyModelView):
+
+    def __init__(self, *args, **kwargs):
+        super(BlogView, self).__init__(*args, **kwargs)
+
+    can_view_details = True
+    # column_list = ['title', 'post'']
 
 class FileView(FileAdmin):
 

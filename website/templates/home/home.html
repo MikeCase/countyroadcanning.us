@@ -1,31 +1,11 @@
 {% extends "base.html" %}
+{% from 'macros.html' import blog_posts with context %}
 
 {% block content %}
-    <div class="container px-4 py-1 my-5 text-center">
-        <div class="container">
-        <img src="{{ url_for('static', filename='assets/banner_logous.png' ) }}" class="d-block mx-auto mb-4 rounded-4 border border-5 border-secondary" style="max-width: 100%; height: auto;" alt="...">
+    <div class="container px-4 py-1 my-1 m-auto text-center w-full sm:w-3/4">
+        <div class="container border-2 border-gray-400 rounded-lg shadow">
+            <img src="{{ url_for('static', filename='assets/banner_logous.png') }}" class="rounded-lg" alt="...">
         </div>
-        <div id="carouselExample" class="carousel slide mx-auto" >
-            <div class="carousel-inner">
-            {% for product in products %}
-                {% if loop.index0 == 0 %}
-                <div class="carousel-item active">
-                {% else %}
-                <div class="carousel-item">
-                {% endif %}
-                    <img src="{{ url_for('static', filename=img_dir+product.img_file ) }}" class=" border border-5 border-secondary rounded-4" style="max-width: 100%; height: auto;" alt="...">
-                </div>
-            {% endfor %}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
     </div>
+    {{ blog_posts() }}       
 {% endblock %}

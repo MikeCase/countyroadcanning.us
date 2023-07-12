@@ -5,3 +5,5 @@ conf.py
 origin.pem
 origin.priv.pem
 website/initial_products.py
+node_modules/
+website/static/src/input.css
