@@ -12,7 +12,7 @@
     
   </head>
   <body style="background: #DDDEE0;">
-    <nav class="flex flex-wrap items-center justify-between shadow p-4 bg-white">
+    <nav class="relative flex flex-wrap items-center justify-between shadow p-4 bg-white">
       <div class="w-auto lg:order-2 lg:w-1/5 lg:text-center">
           <a class="font-bold site-link-std font-heading harfont text-2xl" href="{{ url_for('home') }}">
               County Road Canning
@@ -55,6 +55,14 @@
     <div id="mainBlock" class="container mx-auto py-16">
     {% block content %}{% endblock %}
     </div>
-    
+    <script>
+      // Grab HTML Elements
+      const btn = document.querySelector("button.navbar-burger");
+      const menu = document.querySelector(".navbar-menu");
+      // Add Event Listeners
+      btn.addEventListener("click", () => {
+	      menu.classList.toggle("hidden");
+      });
+    </script>
   </body>
 </html>
